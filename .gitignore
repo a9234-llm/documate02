@@ -151,8 +151,8 @@ activemq-data/
 .env
 .envrc
 .venv
-data/
-!data/.gitkeep
+# data/
+# !data/.gitkeep
 env/
 venv/
 ENV/

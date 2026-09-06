@@ -21,11 +21,14 @@ def upsert_chunks(
     chunk_list, vector_list = list(chunks), list(embeddings)
     if len(chunk_list) != len(vector_list):
         raise ValueError("chunks and embeddings must have the same length")
-    if COLLECTION_NAME not in {item.name for item in client.get_collections().collections}:
-        client.create_collection(
-            COLLECTION_NAME,
-            vectors_config=models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE),
-        )
+
+    # Recreats collection from the scratch each run which guarantees the absence
+    # of the "junk" points in the subsequent runs with another number of chunks
+    client.recreate_collection(
+        COLLECTION_NAME,
+        vectors_config=models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE),
+    )
+
     client.upsert(
         COLLECTION_NAME,
         points=[

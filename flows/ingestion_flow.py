@@ -40,9 +40,15 @@ def embed_task(chunks):
 @task
 def index_task(chunks, embeddings):
     count = upsert_chunks(chunks, embeddings, get_client(settings.qdrant_url))
-    build_bm25_index(chunks, settings.bm25_index_path)
-    get_run_logger().info("Indexed %d points", count)
+    get_run_logger().info("Indexed %d points into Qdrant", count)
     return count
+
+
+@task
+def bm25_task(chunks):
+    build_bm25_index(chunks, settings.bm25_index_path)
+    get_run_logger().info("Built BM25 index with %d documents", len(chunks))
+    return len(chunks)
 
 
 @flow
@@ -50,7 +56,8 @@ def ingest_fastapi_docs():
     files = fetch_task()
     chunks = chunk_task(files)
     embeddings = embed_task(chunks)
-    return index_task(chunks, embeddings)
+    index_task(chunks, embeddings)
+    return bm25_task(chunks)
 
 
 if __name__ == "__main__":

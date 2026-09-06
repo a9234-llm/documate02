@@ -76,3 +76,10 @@ docker compose down -v &&
 ```push
 docker compose down -v && docker compose up qdrant postgres
 ```
+
+## Prefect Chart
+1. Start Prefect:
+```bash
+prefect server start
+```
+2. Browse http://localhost:4200/

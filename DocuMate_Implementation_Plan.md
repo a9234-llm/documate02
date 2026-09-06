@@ -152,8 +152,7 @@ hybrid    | 0.85       | 0.69   <- winner
 
 ---
 
-## ДЕНЬ 3 — RAG-flow, LLM evaluation, интерфейс
-
+## ДЕНЬ 3 — RAG-flow, LLM evaluation, интерф
 ### Задача 3.1 — Groq client
 - В `src/llm/groq_client.py`: обёртка над `groq.Groq()` клиентом, функция `generate(prompt: str, model="llama-3.3-70b-versatile", temperature=0.2) -> str`.
 - **DoD:** тестовый вызов возвращает текст без ошибок.

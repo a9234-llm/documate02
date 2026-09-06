@@ -88,3 +88,40 @@ prefect server start
 ```
 2. Browse http://localhost:4200/
 3. Qdrant UI: http://localhost:6333/dashboard
+
+## RAG / LLM (Day 3)
+
+This repository includes a simple RAG chain and a Streamlit UI to ask questions to the ingested FastAPI documentation.
+
+Files of interest:
+- `src/llm/groq_client.py` — thin wrapper for Groq API calls.
+- `src/llm/prompts.py` — three prompt variants: `baseline`, `expert_role`, `structured`.
+- `src/llm/rag_chain.py` — retrieves context (dense) and calls the LLM to produce answers.
+- `src/eval/llm_eval.py` — harness to compare prompt variants (uses Groq as judge when available).
+- `src/app/streamlit_app.py` — minimal Streamlit UI; logs interactions to Postgres via `src/app/db.py`.
+
+Quick start (Day 3):
+
+1. Ensure `qdrant` and `postgres` are running (via Docker Compose):
+
+```bash
+docker compose up -d qdrant postgres
+```
+
+2. Create DB table for interactions (fill env vars if needed):
+
+```bash
+python -c "from src.app.db import ensure_table; ensure_table()"
+```
+
+3. Run Streamlit UI:
+
+```bash
+streamlit run src/app/streamlit_app.py
+```
+
+The UI uses environment variables for Postgres connection: `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, or a single `POSTGRES_DSN`.
+
+Notes and limitations:
+- The `rag_chain` currently retrieves dense-context chunks for prompt construction. Hybrid/re-rank pipelines exist in `src/retrieval` and are used by evaluation scripts.
+- Groq API is optional; if unavailable, some evaluation features fall back to heuristics.

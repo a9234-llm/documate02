@@ -18,6 +18,7 @@ The pipeline downloads Markdown documentation from FastAPI's GitHub repository,
 splits it at `##` headings, creates 384-dimensional local embeddings, and
 stores both dense (Qdrant) and lexical (BM25) indexes.
 
+### Output
 
 ```bash
 python flows/ingestion_flow.py
@@ -66,4 +67,9 @@ Loading weights: 100%|| 103/103 [00:00<00:00, 7308.51it/s]
 0.5031692 docs/en/docs/tutorial/dependencies/index.md Simple usage { #simple-usage }
 0.46812811 docs/en/docs/tutorial/dependencies/index.md First Steps { #first-steps }
 0.46269995 docs/en/docs/tutorial/dependencies/classes-as-dependencies.md Use it { #use-it }
+```
+
+## Container Re-start
+```push
+docker compose down -v && docker compose up qdrant postgres
 ```

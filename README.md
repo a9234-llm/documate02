@@ -71,10 +71,10 @@ Loading weights: 100%|| 103/103 [00:00<00:00, 7308.51it/s]
 
 ## Container Re-start
 ```push
-docker compose down -v &&
+docker compose down -v
 ```
 ```push
-docker compose down -v && docker compose up qdrant postgres
+docker compose down -v && docker compose up -d qdrant postgres
 ```
 
 ## Prefect Chart
@@ -83,3 +83,4 @@ docker compose down -v && docker compose up qdrant postgres
 prefect server start
 ```
 2. Browse http://localhost:4200/
+3. Qdrant UI: http://localhost:6333/dashboard

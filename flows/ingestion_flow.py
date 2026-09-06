@@ -1,5 +1,12 @@
 """End-to-end FastAPI documentation ingestion flow."""
 
+import os
+import sys
+# Ensure repository root is on sys.path so running the script directly works
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+# Disable telemetry to avoid amplitude shutdown noise during interpreter exit
+os.environ.setdefault("DO_NOT_TRACK", "1")
+
 from prefect import flow, task
 from prefect.logging import get_run_logger
 

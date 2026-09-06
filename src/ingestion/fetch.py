@@ -13,7 +13,7 @@ def fetch_docs(output_dir: Path, token: str = "", timeout: int = 30) -> list[Pat
     output_dir.mkdir(parents=True, exist_ok=True)
     headers = {"Accept": "application/vnd.github+json"}
     if token:
-        headers["Authorization"] = f"******"
+        headers["Authorization"] = "Bearer " + token
     downloaded: list[Path] = []
 
     def visit(url: str) -> None:

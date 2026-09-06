@@ -71,5 +71,8 @@ Loading weights: 100%|| 103/103 [00:00<00:00, 7308.51it/s]
 
 ## Container Re-start
 ```push
+docker compose down -v &&
+```
+```push
 docker compose down -v && docker compose up qdrant postgres
 ```
